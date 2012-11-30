@@ -53,5 +53,13 @@ PN15_K4_FASTQ_FILE="${FASTQ_DIR}${PN15_K4_FASTQ_FILENAME}"
 SEQTK_CMD='/home/ywang/src/seqtk/seqtk'
 FASTX_CMD='/home/export/tools/fastx/fastq_quality_filter'
 
-bash quality_control.sh $E17_K27_FASTQ_FILE trim_con $SEQTK_CMD $FASTX_CMD .
-FASTQ_FILE="${E17_K27_FASTQ_FILE%.*}_trim30.fq"
+MAX_BP=36
+MIN_BP=30
+((TRIM_BP=$MAX_BP-$MIN_BP))
+
+#bash quality_control.sh $E17_K27_FASTQ_FILE trim_con $SEQTK_CMD $FASTX_CMD $TRIM_BP . "${FASTQ_DIR}${E17_K27_BASENAME}_fastq_trim${MIN_BP}.fq"
+#p = 10 ^ (-q/10) if p = 25, q = 0.00316227766... 
+#bash quality_control.sh $E17_K27_FASTQ_FILE discard $SEQTK_CMD $FASTX_CMD 25 50 "${FASTQ_DIR}${E17_K27_BASENAME}_fastq_q25p50.fq"
+#bash quality_control.sh "${FASTQ_DIR}${E17_K27_BASENAME}_fastq_trim${MIN_BP}.fq" discard $SEQTK_CMD $FASTX_CMD 25 40 "${FASTQ_DIR}${E17_K27_BASENAME}_fastq_trim${MIN_BP}_q25p40.fq"
+
+bash quality_control.sh $PN15_K27_FASTQ_FILE discard $SEQTK_CMD $FASTX_CMD 25 50 "${FASTQ_DIR}${PN15_K27_BASENAME}_fastq_q25p50.fq" 
